@@ -1,0 +1,174 @@
+
+.tableHeader {
+    display: flex;
+    width: 100%;
+    height: 30px;
+    background-color: green;
+}
+
+.theadth {
+    position: sticky;
+    top: 0;
+    background-color: black;
+    border: 1px solid green;
+}
+
+.button {
+    width: 80px;
+    height: 20px;
+    background-color: green;
+    margin: 7px;
+}
+
+
+.tablePaginate {
+    display: flex;
+    width: 100%;
+    height: 40px;
+    background-color: #607b67;
+    justify-content: end;
+    padding-right: 30px;
+    box-sizing: border-box;
+}
+
+.paginateButton {
+    background-color: #666d66;
+    width: 50px;
+    align-items: center;
+    border: 2px solid black;
+
+}
+
+.paginateSelect{
+    width: 100px;
+}
+
+.paginateButton i {
+    margin: 27%;
+    text-align: center;
+
+}
+
+.paginatePages {
+    margin-right: 100px;
+    color: black;
+}
+
+.tableRow {
+    /*display: flex;*/
+    /*flex-direction: row;*/
+    width: 100%;
+    height: 60px;
+    /*background-color: black;*/
+    border: 1px solid #ffc7fd;
+}
+
+.tableHeaderBox {
+    box-sizing: border-box;
+    width: 300px;
+    height: 100%;
+    border: 1px solid #ffc7fd;
+    opacity: 0.7;
+}
+
+.scroll {
+    overflow-y: auto;
+    overflow-x: scroll;
+}
+
+.tableScroll {
+    overflow-y: scroll;
+    overflow-x: scroll;
+    width:980px;
+    height: 600px;
+}
+
+.tableBeauty {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9em;
+    font-family: sans-serif;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+.tableBeauty thead tr {
+    background-color: black;
+    color: #acacac;
+    border: 1px solid green;
+
+}
+
+.tableBeauty thead th {
+    border: 1px solid #4a504d;
+    text-align: center;
+    min-width: fit-content;
+    padding: 13px 28px;
+
+}
+
+.tableBeauty td {
+    padding: 12px 15px;
+    text-align: center;
+}
+
+
+.tableBeauty tbody tr {
+    border-bottom: 1px solid #dddddd;
+    background-color: #808a85;
+}
+
+.tableBeauty tbody tr:nth-of-type(even) {
+    background-color: gray;
+}
+
+.tableBeauty tbody tr.active-row {
+    font-weight: bold;
+    color: #009879;
+}
+
+
+
+
+
+.arrowUp {
+    border: solid white;
+    border-width: 3px 0 0 3px;
+    display: inline-block;
+    padding: 3px;
+    transform: rotate(45deg);
+    position: relative;
+    right: -11px;
+}
+
+.arrowDown {
+    border: solid white;
+    border-width: 3px 0 0 3px;;
+    display: inline-block;
+    padding: 3px;
+    transform: rotate(-135deg);
+    position: relative;
+    right: -11px;
+}
+
+
+.arrowRight {
+    border: solid white;
+    border-width: 3px 3px 0 0;
+    display: inline-block;
+    padding: 3px;
+    transform: rotate(45deg);
+    position: relative;
+}
+
+.arrowLeft {
+    border: solid white;
+    border-width: 0 0 3px 3px;
+    display: inline-block;
+    padding: 3px;
+    transform: rotate(45deg);
+    position: relative;
+}
+
+
+.checkbox{
+}

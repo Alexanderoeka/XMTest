@@ -1,0 +1,9 @@
+#doctrine:
+#  dbal:
+#    url: "sqlite:///:memory:"
+#    default_connection: default
+#    connections:
+#      default:
+#        driver: pdo_sqlite
+#        memory: true
+#        path: ":memory:"

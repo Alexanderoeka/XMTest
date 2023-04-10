@@ -5,7 +5,6 @@ namespace App\Common;
 
 
 use App\Common\Exception\ValueNotFoundDtoException;
-use App\Domain\HistoricalQuotes\Dto\HistoricalQuoteDto;
 
 class CollectionDto
 {

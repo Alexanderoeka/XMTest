@@ -33,7 +33,7 @@ class CompanyRepository extends ServiceEntityRepository
     public function getOne()
     {
         $sql = <<<SQL
-                select id from company order by id limit 1
+                select id from company order by random() limit 1
             SQL;
 
         $rsm = new ResultSetMapping();
@@ -44,47 +44,6 @@ class CompanyRepository extends ServiceEntityRepository
 
         $result = $query->getResult();
         return $result;
-    }
-
-    public function getCompanies(string $search, string $order, string $orderBy): NativeQuery
-    {
-
-        $orderBy = $this->getClassMetadata()->getColumnName($orderBy);
-
-        $params = new ArrayCollection();
-        $where = [];
-        $whereClause = '';
-        $orderClause = '';
-
-
-        if ($search) {
-            $where[] = " name like '%' || :search || '%' ";
-            $params->add(new Parameter(':search', $search));
-        }
-
-        if ($orderBy) {
-            $orderBy = $this->getClassMetadata()->getColumnName($orderBy);
-            $orderClause = " order by $orderBy $order ";
-        }
-
-        if ($where) {
-            $whereClause = ' where ' . implode(' and ', $where) . ' ';
-        }
-
-
-        $sql = <<<SQL
-            select * from company f
-                {$whereClause} {$orderClause}
-        SQL;
-
-        $rsm = new ResultSetMappingBuilder($this->getEntityManager());
-        $rsm->addRootEntityFromClassMetadata(Company::class, 'f');
-
-
-        $query = $this->_em->createNativeQuery($sql, $rsm);
-        $query->setParameters($params);
-
-        return $query;
     }
 
     public function getCompaniesLike(string $symbol): NativeQuery

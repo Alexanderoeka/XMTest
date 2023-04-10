@@ -6,9 +6,11 @@ namespace App\Domain\HistoricalQuotes\Dto;
 
 
 use App\Common\BaseDto;
+use App\Common\Exception\ValueNotFoundDtoException;
 use App\Common\ValueObject\DateTimeRange;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Validator\Constraints as Assert;
+use Exception;
 use DateTime;
 
 class HistoricalQuotesGetDto extends BaseDto
@@ -18,6 +20,11 @@ class HistoricalQuotesGetDto extends BaseDto
     #[Assert\Email]
     public string $email;
 
+    /**
+     * @param RequestStack|array $incomingData
+     * @throws ValueNotFoundDtoException
+     * @throws Exception
+     */
     public function __construct(RequestStack|array $incomingData)
     {
         parent::__construct($incomingData);

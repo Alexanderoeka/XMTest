@@ -46,7 +46,7 @@ class GetCompaniesCommand extends Command
 
         $this->companyFactory->makeALot($companiesDto);
 
-        $output->writeln('FINITH');
+        $output->writeln('FINISH');
 
         return 0;
     }

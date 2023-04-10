@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Common\ValueObject;
@@ -44,10 +43,8 @@ class Response extends JsonResponse
     {
         $decodedData = json_decode($this->data, true);
         $decodedData[$key] = $value;
-//        $encodedData = json_encode($decodedData);
 
         self::setData($decodedData);
-//        $this->data = $encodedData;
     }
 
 }

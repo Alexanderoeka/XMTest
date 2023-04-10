@@ -43,21 +43,10 @@ class HistoricalQuotesService extends BaseService
         return $companies;
     }
 
-    /** @return CompanySelectDto[] */
-    public function getCompaniesNameAndSymbol(): array
-    {
-        $symbolAndNameArray = $this->requestTypes->getCompaniesNameAndSymbolAPI();
-
-        /** @var CompanySelectDto[] $companiesDtoCollection */
-        $companiesDtoCollection = CollectionDto::getData($symbolAndNameArray, CompanySelectDto::class);
-
-        return $companiesDtoCollection;
-    }
-
-
     /**
      * @param HistoricalQuotesGetDto $dto
      * @return HistoricalQuoteDto[]
+     *
      * @throws ClientExceptionInterface
      * @throws DecodingExceptionInterface
      * @throws RedirectionExceptionInterface

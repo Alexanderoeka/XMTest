@@ -4,7 +4,7 @@ import {ColumnI} from "./TableNew";
 
 interface PropsI {
     columnsTypes: ColumnI[],
-    orderByColumn: (orderBy: string) => () => void,
+    orderByColumn?: (orderBy: string) => () => void,
     order: 'asc' | 'desc',
     orderBy: string | null
 }

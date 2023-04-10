@@ -9,31 +9,37 @@ interface filter {
 
 interface propsI {
     value: ColumnI,
-    orderByColumn: (orderBy: string) => () => void,
+    orderByColumn?: (orderBy: string) => () => void,
     order: 'asc' | 'desc',
     orderBy: string | null
 }
 
 
 export default function TableHeaderBoxN(props: propsI) {
-    const {orderByColumn}  = props
+    const {orderByColumn} = props
 
-    const arrowUpDown = () =>{
+    const arrowUpDown = () => {
 
-        let arrow=<i></i>;
-        if(props.value.id === props.orderBy){
-            if(props.order === 'asc')
+        let arrow = <i></i>;
+        if (props.value.id === props.orderBy) {
+            if (props.order === 'asc')
                 arrow = <i className={g.arrowDown}/>
-            else if(props.order === 'desc')
+            else if (props.order === 'desc')
                 arrow = <i className={g.arrowUp}/>
         }
 
         return (arrow)
     }
 
+    const orderByColumnDecorator = (id: string) => () => {
+
+        if (typeof orderByColumn !== "undefined")
+            orderByColumn(id)
+    }
+
 
     return (
-        <th className={g.theadth} onClick={orderByColumn(props.value.id)}>
+        <th className={g.theadth} onClick={orderByColumnDecorator(props.value.id)}>
             {props.value?.text}
             {arrowUpDown()}
         </th>

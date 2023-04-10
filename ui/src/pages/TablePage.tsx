@@ -1,8 +1,7 @@
-import React, {useEffect, useState} from "react";
+import React, { useState} from "react";
 import SearchField from "../components/SearchField";
 import fs from "./CompanyStyle.module.css";
 import {pr} from "../common/utils";
-import {dataTable} from "../common/dataRemoveAfter";
 import TableNew, {ColumnI, SearchTParamsI} from "../components/Tablen/TableNew";
 import ls from '../components/styles/linksStyle.module.css'
 import {requestResult} from "../common/api";

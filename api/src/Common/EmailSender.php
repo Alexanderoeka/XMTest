@@ -12,22 +12,26 @@ class EmailSender
 {
     private MailerInterface $mailer;
 
-    public function __construct(MailerInterface $mailer)
+
+    public function __construct(
+        private string $projectMail,
+        MailerInterface $mailer)
     {
         $this->mailer = $mailer;
     }
 
 
-    public function sendEmail(string $fromMail, string $toMail, string $subject, string $bodyHtml)
+    public function sendEmail(string $toMail, string $subject, string $bodyHtml): void
     {
+
+
         $email = (new Email())
-            ->from($fromMail)
+            ->from($this->projectMail)
             ->to($toMail)
             ->subject($subject)
             ->html($bodyHtml);
 
         $this->mailer->send($email);
-        return 'SUCCESS';
     }
 
 }

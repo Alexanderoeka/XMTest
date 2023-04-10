@@ -16,9 +16,11 @@
     "@types/react": "^18.0.28",
     "@types/react-datepicker": "^4.10.0",
     "@types/react-dom": "^18.0.11",
+    "chart.js": "^4.2.1",
     "date-fns": "^2.29.3",
     "dayjs": "^1.11.7",
     "react": "^18.2.0",
+    "react-chartjs-2": "^5.2.0",
     "react-date-range": "^1.4.0",
     "react-datepicker": "^4.11.0",
     "react-dom": "^18.2.0",
@@ -44,5 +46,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@types/chart.js": "^2.9.37"
   }
 }

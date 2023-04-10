@@ -5,28 +5,27 @@ declare(strict_types=1);
 namespace App\Common\Command;
 
 
+use App\Common\CollectionDto;
 use App\Common\EmailSender;
+use App\Domain\HistoricalQuotes\Dto\CompanySelectDto;
+use App\Domain\HistoricalQuotes\Factory\CompanyFactory;
 use App\Domain\HistoricalQuotes\HistoricalQuotesService;
+use App\Domain\HistoricalQuotes\Request\RequestTypes;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class GetCompaniesCommand extends Command
 {
-    private HistoricalQuotesService $historicalQuotesService;
 
-    private EmailSender $emailSender;
 
     public function __construct(
-        HistoricalQuotesService $historicalQuotesService,
-        EmailSender $emailSender,
-        string $name = null
+        private RequestTypes $requestTypes,
+        private CompanyFactory $companyFactory
     )
     {
-        parent::__construct($name);
+        parent::__construct();
 
-        $this->historicalQuotesService = $historicalQuotesService;
-        $this->emailSender = $emailSender;
     }
 
     protected function configure()
@@ -39,20 +38,15 @@ class GetCompaniesCommand extends Command
     {
         $output->writeln('Start getting companies');
 
-        $result = $this->historicalQuotesService->getCompanies();
 
-        $output->writeln('FINISHED TO DATABASE');
+        $companyNameSymbolArray = $this->requestTypes->getCompaniesNameAndSymbolAPI();
 
-        $output->writeln('PROCESS SENDING EMAIL');
+        /** @var CompanySelectDto[] $companiesDto */
+        $companiesDto = CollectionDto::getData($companyNameSymbolArray, CompanySelectDto::class);
 
-        $textSubject = 'companies is loaded';
+        $this->companyFactory->makeALot($companiesDto);
 
-        $bodyHtml = '<p>OMG! There are already here!!!!!! AA<p>';
-
-        $emailResult = $this->emailSender->sendEmail('someOne@mail.ru', 'someTwo@mail.ru', $textSubject, $bodyHtml);
-
-        $output->writeln("EMAIL SENT RESULT : $emailResult");
-
+        $output->writeln('FINITH');
 
         return 0;
     }

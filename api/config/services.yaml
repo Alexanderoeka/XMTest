@@ -24,6 +24,15 @@ services:
             - '../src/Entity/'
             - '../src/Kernel.php'
 
+    App\Domain\HistoricalQuotes\Request\RequestTypes:
+        arguments:
+            $XRapidAPIKey: "%env(X_RAPID_API_KEY)%"
+            $XRapidAPIHost: "%env(X_RAPID_API_HOST)%"
+
+    App\Common\EmailSender:
+        arguments:
+            $projectMail: "%env(PROJECT_MAIL)%"
+
 #    Tests\:
 #        resource: '../tests/'
 

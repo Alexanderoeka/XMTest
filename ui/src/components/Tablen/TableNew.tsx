@@ -11,7 +11,7 @@ import {requestResult} from "../../common/api";
 export interface ColumnI {
     id: string,
     text: string,
-    type?: 'change',
+    type?: 'change' | 'date',
     onClick?: (field: string, rowId: number) => (e: any) => void
 }
 export interface SearchTableI extends Omit<SearchI, 'search'> {

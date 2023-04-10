@@ -2,7 +2,7 @@ import React from "react";
 import {ColumnI} from "./TableNew";
 import g from '../parts/general.module.css';
 
-export type Column = string | number | boolean | null
+export type Column = string | number | boolean | null | any
 
 interface PropsI {
     value?: Column,
@@ -17,10 +17,10 @@ export default function TableRowBoxN(props: PropsI) {
     let td = <td>{value}</td>
 
 
-
-
     if (props.columnTypes?.type === "change" && typeof value === "boolean") {
-        td = <td><input className={g.checkbox} type="checkbox" checked={value} /></td>
+        td = <td><input className={g.checkbox} type="checkbox" checked={value}/></td>
+    } else if (props.columnTypes.type === "date" && value) {
+        td = <td>{value?.date}</td>
     }
 
     return (

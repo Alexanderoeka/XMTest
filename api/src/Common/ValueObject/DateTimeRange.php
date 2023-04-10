@@ -5,6 +5,7 @@ namespace App\Common\ValueObject;
 
 use DateTime;
 use Exception;
+use JetBrains\PhpStorm\Pure;
 
 class DateTimeRange
 {
@@ -31,6 +32,12 @@ class DateTimeRange
     public function getEnd(): DateTime
     {
         return $this->end;
+    }
+
+    #[Pure]
+    public function isDateBetweenRange(DateTime $date): bool
+    {
+        return $date > $this->getStart() && $date < $this->getEnd();
     }
 
 

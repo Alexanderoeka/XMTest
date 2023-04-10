@@ -87,5 +87,23 @@ class CompanyRepository extends ServiceEntityRepository
         return $query;
     }
 
+    public function getCompaniesLike(string $symbol): NativeQuery
+    {
+        $sql = <<<SQL
+            select * from company c
+            where c.symbol ~*  ('^' || :symbol || '.*')
+            order by c.symbol limit 10;
+        SQL;
+
+        $rsm = new ResultSetMappingBuilder($this->getEntityManager());
+        $rsm->addRootEntityFromClassMetadata(Company::class, 'c');
+
+
+        $query = $this->_em->createNativeQuery($sql, $rsm);
+        $query->setParameter(':symbol', $symbol);
+
+        return $query;
+    }
+
 
 }

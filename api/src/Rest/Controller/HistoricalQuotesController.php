@@ -6,10 +6,12 @@ namespace App\Rest\Controller;
 
 use App\Common\CollectionTransformer;
 use App\Common\SearchDto;
+use App\Common\ValueObject\Response;
 use App\Domain\HistoricalQuotes\Dto\HistoricalQuotesGetDto;
 use App\Domain\HistoricalQuotes\HistoricalQuotesService;
+use App\Domain\HistoricalQuotes\Transformer\HistoryQuoteTransformer;
 use App\Rest\Controller\BaseController;
-use App\Domain\HistoricalQuotes\Transformer\CompanyTransformer;
+use App\Domain\HistoricalQuotes\Transformer\CompanySelectTransformer;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -26,10 +28,20 @@ class HistoricalQuotesController extends BaseController
         return new JsonResponse(['fqef']);
     }
 
+
+
     #[Route('/api/historical-quotes/get', methods: ['GET'])]
-    public function getHistoricalQuotes(HistoricalQuotesGetDto $dto): JsonResponse
+    public function getHistoricalQuotes(HistoricalQuotesGetDto $dto): Response
     {
-        return $this->getHistoricalQuotes($dto);
-//        return $this->getResponseWithPagingNative($dto,$this->historicalQuotesService->searchCompanies($dto), new CompanyTransformer);
+        $data = $this->historicalQuotesService->getHistoricalQuotes($dto);
+        $formattedData = CollectionTransformer::getData($data, new HistoryQuoteTransformer());
+        return new Response($formattedData);
+    }
+    #[Route('/api/companies-name-symbol/get/{symbol}', methods: ['GET'])]
+    public function getCompaniesLike(string $symbol): Response
+    {
+        $data = $this->historicalQuotesService->getCompaniesLike($symbol);
+        $formattedData = CollectionTransformer::getData($data, new CompanySelectTransformer());
+        return new Response($formattedData);
     }
 }

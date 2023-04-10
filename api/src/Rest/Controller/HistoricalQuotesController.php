@@ -14,6 +14,12 @@ use App\Rest\Controller\BaseController;
 use App\Domain\HistoricalQuotes\Transformer\CompanySelectTransformer;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
+use Exception;
 
 class HistoricalQuotesController extends BaseController
 {
@@ -33,9 +39,17 @@ class HistoricalQuotesController extends BaseController
     #[Route('/api/historical-quotes/get', methods: ['GET'])]
     public function getHistoricalQuotes(HistoricalQuotesGetDto $dto): Response
     {
-        $data = $this->historicalQuotesService->getHistoricalQuotes($dto);
+        try {
+            $data = $this->historicalQuotesService->getHistoricalQuotes($dto);
+
+
         $formattedData = CollectionTransformer::getData($data, new HistoryQuoteTransformer());
         return new Response($formattedData);
+        } catch (ClientExceptionInterface | DecodingExceptionInterface | RedirectionExceptionInterface | ServerExceptionInterface | TransportExceptionInterface $e) {
+            return (new Response())->setMessage('Baad')->setSuccess(false);
+        } catch (Exception $e) {
+            return (new Response())->setMessage('Baads')->setSuccess(false);
+        }
     }
     #[Route('/api/companies-name-symbol/get/{symbol}', methods: ['GET'])]
     public function getCompaniesLike(string $symbol): Response

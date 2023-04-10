@@ -1,18 +1,50 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
 import TablePage from "../pages/TablePage";
 import Links from "../components/Links";
 import HistoricalQuotesFormPage from "../pages/HistoricalQuotesFormPage";
+import Popup from "../components/Popup";
 
 export default function Routing() {
+
+    const [state, setState] = useState({
+        popup: { show: false, value: '' }
+    })
+
+
+
+    /** TODO make POPUP!!! */
+    const showPopup = (text: any) => {
+        setState(prev => ({
+            ...prev,
+            popup: {
+                ...prev.popup,
+                value: text,
+                show: true
+            }
+        }))
+    }
+
+
+
+    const hidePopup = () => {
+        setState(prev => ({
+            ...prev,
+            popup: {
+                ...prev.popup,
+                value: '',
+                show: false
+            }
+        }))
+    }
     return (
         <Router>
-            <Links/>
             <Routes>
-                <Route path="/" element={<HistoricalQuotesFormPage/>}/>
-                <Route path="/historical-quotes-form" element={<HistoricalQuotesFormPage/>}/>
+                <Route path="/" element={<HistoricalQuotesFormPage popup={showPopup}/>}/>
+                <Route path="/historical-quotes-form" element={<HistoricalQuotesFormPage popup={showPopup}/>}/>
                 <Route path="/table" element={<TablePage/>}/>
             </Routes>
+            {state.popup.show && <Popup click={hidePopup} value={state.popup.value} />}
         </Router>
     );
 }

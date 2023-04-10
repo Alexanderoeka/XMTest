@@ -15,6 +15,11 @@ use App\Domain\HistoricalQuotes\Entity\Company;
 use App\Domain\HistoricalQuotes\Repository\CompanyRepository;
 use App\Domain\HistoricalQuotes\Request\RequestTypes;
 use Exception;
+use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 
 class HistoricalQuotesService extends BaseService
 {
@@ -51,7 +56,14 @@ class HistoricalQuotesService extends BaseService
 
 
     /**
+     * @param HistoricalQuotesGetDto $dto
      * @return HistoricalQuoteDto[]
+     * @throws ClientExceptionInterface
+     * @throws DecodingExceptionInterface
+     * @throws RedirectionExceptionInterface
+     * @throws ServerExceptionInterface
+     * @throws TransportExceptionInterface
+     * @throws Exception
      */
     public function getHistoricalQuotes(HistoricalQuotesGetDto $dto): array
     {
@@ -60,23 +72,22 @@ class HistoricalQuotesService extends BaseService
 
         $historicalQuotesArraySorted = $this->sortArrayBy($historicalQuotesArray, 'date', SORT_ASC);
 
-        $historicalQuotesDto = [];
-        foreach ($historicalQuotesArraySorted as $historicalQuote) {
-
-            try {
-                $historicalQuoteDto = new HistoricalQuoteDto($historicalQuote);
-                if (!$dto->dateTimeRange->isDateBetweenRange($historicalQuoteDto->date))
-                    continue;
-                $historicalQuotesDto[] = $historicalQuoteDto;
-            } catch (ValueNotFoundDtoException $e) {
+        /** @var HistoricalQuoteDto[] $historicalQuotesDto */
+        $historicalQuotesDto = CollectionDto::getData($historicalQuotesArraySorted, HistoricalQuoteDto::class);
+        $historicalQuotesDtoRanged = [];
+        foreach ($historicalQuotesDto as $historicalQuoteDto) {
+            if (!$dto->dateTimeRange->isDateBetweenRange($historicalQuoteDto->date))
                 continue;
-            }
-
+            $historicalQuotesDtoRanged[] = $historicalQuoteDto;
         }
-        $this->emailSender->sendEmail($dto->email, 'submitted Company Symbol', "From {$dto->dateTimeRange->getStart()->format('Y-m-d')} to {$dto->dateTimeRange->getEnd()->format('Y-m-d')}");
 
 
-        return $historicalQuotesDto;
+        $companyName = $this->companyRepository->findOneBy(['symbol' => $dto->companySymbol])?->getName() ?? 'undefinedName';
+
+        $this->emailSender->sendEmail($dto->email, "Company name : {$companyName}", "From {$dto->dateTimeRange->getStart()->format('Y-m-d')} to {$dto->dateTimeRange->getEnd()->format('Y-m-d')}");
+
+
+        return $historicalQuotesDtoRanged;
     }
 
     private function sortArrayBy(array $array, string $key, int $order): array

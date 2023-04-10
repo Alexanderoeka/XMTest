@@ -67,10 +67,8 @@ export default function DatePickerRange(props: PropsI) {
             {!isValid && <div style={{color: 'red', fontSize: '14px'}}>*Date range is not valid</div>}
             <DatePicker value={startDate} onChange={change('startDate')} format={"DD-MM-YYYY"}
                         views={['year', 'month', 'day']}/>
-            1
             <DatePicker value={endDate} onChange={change('endDate')} format={"DD-MM-YYYY"}
                         views={['year', 'month', 'day']}/>
-            2
         </div>
     );
 }

@@ -79,8 +79,9 @@
 .tableScroll {
     overflow-y: scroll;
     overflow-x: scroll;
-    width:980px;
+    width:1050px;
     height: 600px;
+    background-color: rgba(74, 82, 91, 0.3);
 }
 
 .tableBeauty {
@@ -172,3 +173,56 @@
 
 .checkbox{
 }
+
+
+
+
+
+/* <Popup> */
+
+.popupHover {
+    background-color: rgba(66, 66, 66, 0.781);
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+}
+
+.popupBox {
+    position: fixed;
+    background-color: white;
+    width: 335px;
+    height: 157px;
+    top: calc(100vh - 70vh);
+    left:0;
+    right: 0;
+    margin:0 auto;
+}
+
+
+.ok{
+    display: flex;
+    position: absolute;
+    right: 17px;
+    bottom: 16px;
+    width: 47px;
+    background: #fffb74;
+    border-radius: 4px;
+    text-align: center;
+    height: 20px;
+    justify-content: center;
+    align-items: center;
+}
+
+.ok:hover{
+    box-shadow: 0 0 2px black;
+}
+
+.ok:active{
+    background-color: #ffff93;
+}
+
+
+
+/* </Popup> */

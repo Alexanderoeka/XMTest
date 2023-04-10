@@ -11,7 +11,7 @@ class Response extends JsonResponse
 {
 
 
-    public function __construct(mixed $data, array $paginationData = [])
+    public function __construct(mixed $data = '', array $paginationData = [])
     {
         $data = ['data' => $data];
         $paginationData = $paginationData ? ['pagination' => $paginationData] : [];
@@ -24,14 +24,30 @@ class Response extends JsonResponse
 
     public function setSuccess(bool $success): static
     {
-        $this->data['success'] = $success;
+        $this->setDataValue('success',$success);
         return $this;
     }
 
     public function setAdditionalData(string $key, mixed $additionalData): static
     {
-        $this->data[$key] = $additionalData;
+        $this->setDataValue($key,$additionalData);
         return $this;
+    }
+
+    public function setMessage(string $message): static
+    {
+        $this->setDataValue('message',$message);
+        return $this;
+    }
+
+    private function setDataValue($key, $value)
+    {
+        $decodedData = json_decode($this->data, true);
+        $decodedData[$key] = $value;
+//        $encodedData = json_encode($decodedData);
+
+        self::setData($decodedData);
+//        $this->data = $encodedData;
     }
 
 }

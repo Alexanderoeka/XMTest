@@ -136,7 +136,6 @@ export default function TableStatic(props: propsI) {
                     </tbody>
                 </table>
             </div>
-            {/*<TablePaginate onChange={handleChange} page={page} pages={pages} perPage={perPage}/>*/}
         </div>
     )
 }

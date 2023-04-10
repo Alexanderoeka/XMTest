@@ -16,9 +16,15 @@ import TableNew, {ColumnI} from "../components/Tablen/TableNew";
 import TableStatic from "../components/Tablen/TableStatic";
 import {getCompaniesLike, getCompaniesNameAndSymbol, getHistoricalQuotes} from "../queries/historicalQuotes";
 import LineChart from "../components/LineChart";
+import SearchField from "../components/form/SearchField";
+
+interface PropsI {
+    popup: (text: any) => void
+
+}
 
 
-export default function HistoricalQuotesFormPage() {
+export default function HistoricalQuotesFormPage(props: PropsI) {
 
     const [state, setState] = useState({
         search: {
@@ -28,7 +34,7 @@ export default function HistoricalQuotesFormPage() {
             email: null
         },
         canSubmits: {
-            text: false,
+            companySymbol: false,
             dateRange: false,
             email: false
         },
@@ -59,13 +65,13 @@ export default function HistoricalQuotesFormPage() {
         pr('dq')
         getHistoricalQuotes(state.search)
             .then(result => {
-                pr(result.data)
-                pr(result.data[230])
                 if (result.success)
                     setState(prev => ({
                         ...prev,
                         tableData: result.data
                     }))
+                else
+                    props.popup(result.message)
             })
     }
 
@@ -81,21 +87,10 @@ export default function HistoricalQuotesFormPage() {
 
     const canSubmit = () => {
         const {canSubmits} = state
-        const {dateRange, email, text} = canSubmits
+        const {dateRange, email, companySymbol} = canSubmits
 
-        return dateRange && email && text;
+        return dateRange && email && companySymbol;
     }
-
-    // const getCompaniesNameAndSymbolForSelect = () => {
-    //     getCompaniesNameAndSymbol()
-    //         .then(result => {
-    //             if (result.success)
-    //                 setState(prev => ({
-    //                     ...prev,
-    //                     companiesNameAndSymbols: result.data
-    //                 }))
-    //         })
-    // }
 
     const getCompaniesLikeForSelect = () => {
         const {search} = state
@@ -107,6 +102,8 @@ export default function HistoricalQuotesFormPage() {
                         ...prev,
                         companiesNameAndSymbols: result.data
                     }))
+                else
+                    props.popup(result.message)
             })
     }
 
@@ -125,37 +122,26 @@ export default function HistoricalQuotesFormPage() {
 
     return (
         <div>
-            <div className={bs.container}>
+            <div  className={bs.mainContainer}>
+                <div className={bs.containerSearch}>
 
-                <div style={{width: 300}}>
-                    <Autocomplete
-                        // onChange={getCompaniesLikeForSelect}
-                        value={companySymbol}
-                        onInput={onChangeSearch('companySymbol')}
-                        options={companiesNameAndSymbols.map((el: any) => el.symbol)}
-                        // groupBy={(option) => option.name}
-                        // getOptionLabel={(option) => option.name}
-                        renderInput={(value) => (
-                            <TextField {...value} label="Data"/>
-                        )}
-                    />
-                </div>
+                    <SearchField value={companySymbol} onChange={onChangeSearch('companySymbol')}
+                                 options={companiesNameAndSymbols} setSubmit={setSubmitFunc('companySymbol')}/>
 
-                <TextInput value={companySymbol} onChange={onChangeSearch('companySymbol')}
-                           setSubmit={setSubmitFunc('text')}/>
-                <DatePickerRange startDate={startDate} endDate={endDate} onChange={onChangeSearch}
-                                 setSubmit={setSubmitFunc('dateRange')}/>
-                <EmailField value={email} onChange={onChangeSearch('email')} setSubmit={setSubmitFunc('email')}/>
-                <Button color={"secondary"} variant={"contained"} onClick={submit} disabled={!canSubmit()}>Get Data
-                    table</Button>
-            </div>
-            <div className={bs.container}>
-                <div>
-                    edwqd
-                    <TableStatic tableData={tableData} columnsTypes={columnsTypes}/>
+                    <DatePickerRange startDate={startDate} endDate={endDate} onChange={onChangeSearch}
+                                     setSubmit={setSubmitFunc('dateRange')}/>
+                    <EmailField value={email} onChange={onChangeSearch('email')} setSubmit={setSubmitFunc('email')}/>
+                    <Button color={"secondary"} variant={"contained"} onClick={submit} disabled={!canSubmit()}>Get Data
+                        table</Button>
                 </div>
-                <div style={{width: 1200}}>
-                    <LineChart label={'date'} data={tableData} lines={['open', 'close']}/>
+                <div className={bs.container}>
+                    <div>
+                        edwqd
+                        <TableStatic tableData={tableData} columnsTypes={columnsTypes}/>
+                    </div>
+                    <div style={{width: 1050}}>
+                        <LineChart label={'date'} data={tableData} lines={['open', 'close']}/>
+                    </div>
                 </div>
             </div>
 

@@ -7,8 +7,10 @@ namespace App\Domain\HistoricalQuotes\Request;
 
 use App\Common\Exception\ValueNotFoundDtoException;
 use App\Common\ValueObject\DateTimeRange;
+use App\Common\ValueObject\Response;
 use App\Domain\HistoricalQuotes\Dto\HistoricalQuoteDto;
 use JetBrains\PhpStorm\ArrayShape;
+use Symfony\Component\HttpClient\Exception\RedirectionException;
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
@@ -35,31 +37,38 @@ class RequestTypes
      * @throws TransportExceptionInterface
      * @throws RedirectionExceptionInterface
      * @throws ClientExceptionInterface
+     * @throws Exception
      */
     #[ArrayShape(['date' => 'int', 'open' => 'float', 'close' => 'float', 'high' => 'float', 'low' => 'float', 'volume' => 'int'])]
     public function getHistoricalQuotesAPI(string $companySymbol): array
     {
 
-        $url = 'https://yh-finance.p.rapidapi.com/stock/v3/get-historical-data';
+        try {
 
-        $response = $this->httpClient->request(
-            'GET',
-            $url,
-            [
-                'query' => [
-                    'symbol' => $companySymbol
-                ],
-                'headers' => [
-                    'X-RapidAPI-Key' => $this->XRapidAPIKey,
-                    'X-RapidAPI-Host' => $this->XRapidAPIHost
+            $url = 'https://yh-finance.p.rapidapi.com/stock/v3/get-historical-data';
+
+            $response = $this->httpClient->request(
+                'GET',
+                $url,
+                [
+                    'query' => [
+                        'symbol' => $companySymbol
+                    ],
+                    'headers' => [
+                        'X-RapidAPI-Key' => $this->XRapidAPIKey,
+                        'X-RapidAPI-Host' => $this->XRapidAPIHost
+                    ]
                 ]
-            ]
-        );
+            );
 
 
-        $historicalQuotes = $response->toArray()['prices'];
+            $historicalQuotes = $response->toArray()['prices'];
 
-        return $historicalQuotes;
+            return $historicalQuotes;
+        }catch (RedirectionExceptionInterface $e){
+            throw new Exception("API Couldn't find historical data with symbol '$companySymbol'");
+
+        }
     }
 
 

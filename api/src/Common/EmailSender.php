@@ -1,10 +1,10 @@
 <?php
 declare(strict_types=1);
 
-
 namespace App\Common;
 
 
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
 
@@ -21,9 +21,11 @@ class EmailSender
     }
 
 
+    /**
+     * @throws TransportExceptionInterface
+     */
     public function sendEmail(string $toMail, string $subject, string $bodyHtml): void
     {
-
 
         $email = (new Email())
             ->from($this->projectMail)

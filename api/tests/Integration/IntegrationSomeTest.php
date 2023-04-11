@@ -47,7 +47,7 @@ class IntegrationSomeTest extends KernelTestCase
         /** @var CompanyRepository $companyRepository */
         $companyRepository = $this->entityManager->getRepository(Company::class);
 
-        $companyId = $companyRepository->getOne()[0]['id'];
+        $companyId = $companyRepository->getOne()['id'];
 
         $company = $companyRepository->find($companyId);
 
@@ -55,7 +55,7 @@ class IntegrationSomeTest extends KernelTestCase
 //        $this->expectOutputString(json_encode($company->getName()));
 
 
-        $companyRepository->remove($company);
+        $this->entityManager->remove($company);
 
 
         $this->entityManager->flush();

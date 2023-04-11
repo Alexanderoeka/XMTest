@@ -38,30 +38,16 @@ class HistoricalQuotesController extends BaseController
     #[Route('/api/historical-quotes/get', methods: ['GET'])]
     public function getHistoricalQuotes(HistoricalQuotesGetDto $dto): Response
     {
-        try {
             $data = $this->historicalQuotesService->getHistoricalQuotes($dto);
-
-
             $formattedData = CollectionTransformer::getData($data, new HistoryQuoteTransformer());
             return new Response($formattedData);
-        } catch (RedirectionExceptionInterface $e) {
-            return (new Response())->setMessage("Couldn\'t find historical data with symbol $dto->companySymbol")->setSuccess(false);
-        } catch (ClientExceptionInterface | ServerExceptionInterface | DecodingExceptionInterface | TransportExceptionInterface  $e) {
-            return (new Response())->setMessage($e->getMessage())->setSuccess(false);
-        } catch (Exception $e) {
-            return (new Response())->setMessage($e->getMessage())->setSuccess(false);
-        }
     }
 
     #[Route('/api/companies-name-symbol/get/{symbol}', methods: ['GET'])]
     public function getCompaniesLike(string $symbol): Response
     {
-        try {
             $data = $this->historicalQuotesService->getCompaniesLike($symbol);
             $formattedData = CollectionTransformer::getData($data, new CompanySelectTransformer());
             return new Response($formattedData);
-        }catch (Exception $e){
-            return (new Response())->setMessage($e->getMessage())->setSuccess(false);
-        }
     }
 }

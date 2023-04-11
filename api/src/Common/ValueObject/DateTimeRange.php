@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Common\ValueObject;
 
+use App\Common\Exception\DateTimeRangeException;
 use DateTime;
 use Exception;
 use JetBrains\PhpStorm\Pure;
@@ -17,7 +18,7 @@ class DateTimeRange
     public function __construct(DateTime $start, DateTime $end)
     {
         if ($start > $end) {
-            throw new Exception('Entered date of start greater then date end');
+            throw new DateTimeRangeException('Entered date of start greater then date end');
         }
 
         $this->start = $start;

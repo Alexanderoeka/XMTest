@@ -33,6 +33,12 @@ services:
         arguments:
             $projectMail: "%env(PROJECT_MAIL)%"
 
+
+    app.exception_handler:
+        class: App\Common\Handler\ExceptionHandler
+        tags:
+            - { name: kernel.event_listener, event: kernel.exception, method: onKernelException }
+
 #    Tests\:
 #        resource: '../tests/'
 

@@ -6,9 +6,11 @@ namespace App\Common;
 
 use App\Common\Exception\ValueNotFoundDtoException;
 use App\Common\ValueObject\DateTimeRange;
+use App\Common\Exception\ValidationException;
 use Exception;
 use Symfony\Component\HttpFoundation\RequestStack;
 use DateTime;
+use Symfony\Component\Validator\Validation;
 
 
 abstract class BaseDto
@@ -57,7 +59,7 @@ abstract class BaseDto
      */
     protected function getValueSure($key): mixed
     {
-        if (!array_key_exists($key, $this->data))
+        if (!array_key_exists($key, $this->data) || !$this->data[$key])
             throw new ValueNotFoundDtoException("Value with key $key not found in array \$data");
         return $this->data[$key];
     }
@@ -72,7 +74,7 @@ abstract class BaseDto
      */
     protected function getFloatValueSure($key): float
     {
-        if (!array_key_exists($key, $this->data))
+        if (!array_key_exists($key, $this->data) || !$this->data[$key])
             throw new ValueNotFoundDtoException("Value with key $key not found in array \$data");
         return floatval($this->data[$key]);
     }
@@ -95,7 +97,7 @@ abstract class BaseDto
      */
     protected function getDateValueSure(string $key): DateTime
     {
-        if (!array_key_exists($key, $this->data))
+        if (!array_key_exists($key, $this->data) || !$this->data[$key])
             throw new ValueNotFoundDtoException("Value with key $key not found in array \$data");
 
         return new DateTime((string)$this->data[$key]);
@@ -107,7 +109,7 @@ abstract class BaseDto
      */
     protected function getDateValueFromUnixSure(string $key): DateTime
     {
-        if (!array_key_exists($key, $this->data))
+        if (!array_key_exists($key, $this->data) || !$this->data[$key])
             throw new ValueNotFoundDtoException("Value with key $key not found in array \$data");
 
         return new DateTime("@{$this->data[$key]}");
@@ -116,31 +118,26 @@ abstract class BaseDto
     /**
      * @throws Exception
      * @throws ValueNotFoundDtoException
+     * @throws ValidationException
      */
     protected function getDateRangeSure(string $keyDateStart, string $keyDateEnd): DateTimeRange
     {
-        if (!array_key_exists($keyDateStart, $this->data))
-            throw new ValueNotFoundDtoException("Value with key $keyDateStart not found in array \$data");
-        if (!array_key_exists($keyDateEnd, $this->data))
-            throw new ValueNotFoundDtoException("Value with key $keyDateEnd not found in array \$data");
-
         return new DateTimeRange($this->getDateValueSure($keyDateStart), $this->getDateValueSure($keyDateEnd));
     }
 
-    protected function val()
+    /**
+     * @throws ValueNotFoundDtoException
+     * @throws ValidationException
+     */
+    protected function getEmailValueSure(string $key): string
     {
-//        $as = Validation::createValidator();
-//        $as->validate();
+        if (!array_key_exists($key, $this->data) || !$this->data[$key])
+            throw new ValueNotFoundDtoException("Value with key $key not found in array \$data");
+
+        if(!preg_match('/^.+@[a-zA-Z]+\.[a-zA-Z]+$/',$this->data[$key]))
+            throw new ValidationException("Email with value : '{$this->data[$key]}' not valid",);
+
+        return $this->data[$key];
     }
-
-    protected function sanitizeString(?string $input): ?string
-    {
-        if ($input === null) {
-            return null;
-        }
-
-        return htmlspecialchars($input, ENT_QUOTES | ENT_HTML5, 'UTF-8');
-    }
-
 
 }

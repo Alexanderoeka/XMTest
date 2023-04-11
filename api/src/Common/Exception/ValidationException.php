@@ -7,7 +7,7 @@ namespace App\Common\Exception;
 use JetBrains\PhpStorm\Pure;
 use LogicException;
 
-class ValueNotFoundDtoException extends LogicException
+class ValidationException extends LogicException
 {
     #[Pure]
     public function __construct($message = "", $code = 400)

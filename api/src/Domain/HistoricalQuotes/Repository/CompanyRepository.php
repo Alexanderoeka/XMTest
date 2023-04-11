@@ -33,16 +33,17 @@ class CompanyRepository extends ServiceEntityRepository
     public function getOne()
     {
         $sql = <<<SQL
-                select id from company order by random() limit 1
+                select symbol, id from company order by random() limit 1
             SQL;
 
         $rsm = new ResultSetMapping();
 
+        $rsm->addScalarResult('symbol','symbol');
         $rsm->addScalarResult('id','id');
 
         $query = $this->_em->createNativeQuery($sql, $rsm);
 
-        $result = $query->getResult();
+        $result = $query->getResult()[0];
         return $result;
     }
 

@@ -1,5 +1,28 @@
 # Project : "XM TEST"
 
+
+
+## Application Deployment Steps
+
+####1 
+
+    Copy .env.dist to .env in main and api derictory
+
+####2
+
+    Execute ./buildup.sh command
+####3
+
+    Execute ./migrate.sh command
+####4
+
+    Execute ./get_companies.sh
+
+
+
+
+
+
 ## BASIC 
 
 Build whole project:
@@ -59,4 +82,7 @@ Mailer at: `http://localhost:1080/`
 
 ###2
     If there is no SERVICE name in docker-compose or docker compose,
-        the console command will not start, because the command is launched in the container by it.
+        the console co  mmand will not start, because the command is launched in the container by it.
+###3
+    Commands that connected with docker mightn't execute without sudo.
+         Depends on how you configured docker before

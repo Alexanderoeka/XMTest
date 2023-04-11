@@ -17,8 +17,7 @@ export default function EmailField(props: PropsI) {
     });
 
     const isValidEmail = (email: string) => {
-        return true;
-        // return /^.+@[a-zA-Z]+\.[a-zA-Z]+$/.test(email);
+        return /^.+@[a-zA-Z]+\.[a-zA-Z]+$/.test(email);
     }
 
     const checkValid = (value: string) => {

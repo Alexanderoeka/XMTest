@@ -61,8 +61,10 @@ class HistoricalQuotesService extends BaseService
 
 
         /** @var HistoricalQuoteDto[] $historicalQuotesDto */
-        $historicalQuotesDtoRanged = $this->sortHistoricalQuotes($historicalQuotesArray, $dto->dateTimeRange, 'date', SORT_ASC );
+        $historicalQuotesDtoRanged = $this->sortHistoricalQuotes($historicalQuotesArray, $dto->dateTimeRange, 'date', SORT_ASC);
 
+        if (!$historicalQuotesDtoRanged)
+            throw new Exception("Nothing came from API by symbol: \"$dto->companySymbol\" and range from {$dto->dateTimeRange->getStart()->format('Y-m-d')} to {$dto->dateTimeRange->getEnd()->format('Y-m-d')}");
 
         $companyName = $this->companyRepository->findOneBy(['symbol' => $dto->companySymbol])?->getName() ?? 'undefinedName. i.e. API found quotes for this symbol, but BD or json site doesnt have it';
 
@@ -71,7 +73,6 @@ class HistoricalQuotesService extends BaseService
 
         return $historicalQuotesDtoRanged;
     }
-
 
 
     /**

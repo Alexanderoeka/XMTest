@@ -8,7 +8,7 @@ import EmailField from "../components/form/EmailField";
 import bs from './baseStyle.module.css';
 import 'react-datepicker/dist/react-datepicker.css';
 import DatePickerRange from "../components/form/DatePickerRange";
-import  {ColumnI} from "../components/Tablen/TableNew";
+import {ColumnI} from "../components/Tablen/TableNew";
 import TableStatic from "../components/Tablen/TableStatic";
 import {getCompaniesLike, getHistoricalQuotes} from "../queries/historicalQuotes";
 import LineChart from "../components/LineChart";
@@ -39,7 +39,8 @@ export default function HistoricalQuotesFormPage(props: PropsI) {
     });
 
     useEffect(() => {
-        getCompaniesLikeForSelect();
+        if (state.search.companySymbol)
+            getCompaniesLikeForSelect();
     }, [state.search.companySymbol])
 
 
@@ -118,7 +119,7 @@ export default function HistoricalQuotesFormPage(props: PropsI) {
 
     return (
         <div>
-            <div  className={bs.mainContainer}>
+            <div className={bs.mainContainer}>
                 <div className={bs.containerSearch}>
 
                     <SearchField value={companySymbol} onChange={onChangeSearch('companySymbol')}

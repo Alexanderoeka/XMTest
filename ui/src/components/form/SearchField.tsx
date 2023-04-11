@@ -28,9 +28,12 @@ export default function SearchField(props: PropsI) {
     const change = (e: any) => {
 
         let value = e?.target?.value ?? e;
+        if(!value)
+            return;
         pr(value)
 
         checkValid(value);
+
 
 
         onChange(value);

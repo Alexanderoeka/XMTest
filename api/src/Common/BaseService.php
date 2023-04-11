@@ -40,5 +40,11 @@ class BaseService
     }
 
 
+    protected function sortArrayBy(array $array, string $key, int $order): array
+    {
+        $arrayColumn = array_column($array, $key);
+        array_multisort($arrayColumn, $order, $array);
 
+        return $array;
+    }
 }

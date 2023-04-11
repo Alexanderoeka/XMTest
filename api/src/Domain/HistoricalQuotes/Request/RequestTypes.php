@@ -5,12 +5,7 @@ declare(strict_types=1);
 namespace App\Domain\HistoricalQuotes\Request;
 
 
-use App\Common\Exception\ValueNotFoundDtoException;
-use App\Common\ValueObject\DateTimeRange;
-use App\Common\ValueObject\Response;
-use App\Domain\HistoricalQuotes\Dto\HistoricalQuoteDto;
 use JetBrains\PhpStorm\ArrayShape;
-use Symfony\Component\HttpClient\Exception\RedirectionException;
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;

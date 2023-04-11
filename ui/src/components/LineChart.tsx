@@ -23,7 +23,6 @@ export default function LineChart(props: any) {
         ]
     }
     return (<div>
-        qdqwed
         <Line data={dataChart}/>
     </div>)
 

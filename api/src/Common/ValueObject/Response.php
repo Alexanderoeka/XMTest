@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace App\Common\ValueObject;
 
-use JetBrains\PhpStorm\ArrayShape;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 class Response extends JsonResponse

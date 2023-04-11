@@ -6,9 +6,7 @@ namespace App\Domain\HistoricalQuotes\Dto;
 
 
 use App\Common\BaseDto;
-use App\Common\ValueObject\DateTimeRange;
 use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Component\Validator\Constraints as Assert;
 use DateTime;
 
 class HistoricalQuoteDto extends BaseDto

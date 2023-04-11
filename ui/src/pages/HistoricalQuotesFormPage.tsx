@@ -7,14 +7,10 @@ import {pr} from "../common/utils";
 import EmailField from "../components/form/EmailField";
 import bs from './baseStyle.module.css';
 import 'react-datepicker/dist/react-datepicker.css';
-import {DateRangePicker} from "@react-spectrum/datepicker";
-// import { DateRangePicker } from 'react-date-range';
-import {DateRange} from "@mui/x-date-pickers/internals/components/icons";
 import DatePickerRange from "../components/form/DatePickerRange";
-import TextInput from "../components/form/TextInput";
-import TableNew, {ColumnI} from "../components/Tablen/TableNew";
+import  {ColumnI} from "../components/Tablen/TableNew";
 import TableStatic from "../components/Tablen/TableStatic";
-import {getCompaniesLike, getCompaniesNameAndSymbol, getHistoricalQuotes} from "../queries/historicalQuotes";
+import {getCompaniesLike, getHistoricalQuotes} from "../queries/historicalQuotes";
 import LineChart from "../components/LineChart";
 import SearchField from "../components/form/SearchField";
 
@@ -136,10 +132,11 @@ export default function HistoricalQuotesFormPage(props: PropsI) {
                 </div>
                 <div className={bs.container}>
                     <div>
-                        edwqd
+                        <h4>Table</h4>
                         <TableStatic tableData={tableData} columnsTypes={columnsTypes}/>
                     </div>
                     <div style={{width: 1050}}>
+                        <h4>Chart</h4>
                         <LineChart label={'date'} data={tableData} lines={['open', 'close']}/>
                     </div>
                 </div>

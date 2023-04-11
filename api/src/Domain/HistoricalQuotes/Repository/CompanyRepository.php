@@ -5,9 +5,7 @@ namespace App\Domain\HistoricalQuotes\Repository;
 
 use App\Domain\HistoricalQuotes\Entity\Company;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\NativeQuery;
-use Doctrine\ORM\Query\Parameter;
 use Doctrine\ORM\Query\ResultSetMapping;
 use Doctrine\ORM\Query\ResultSetMappingBuilder;
 use Doctrine\Persistence\ManagerRegistry;
@@ -64,6 +62,4 @@ class CompanyRepository extends ServiceEntityRepository
 
         return $query;
     }
-
-
 }

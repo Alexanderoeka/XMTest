@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 
 namespace App\Common\Handler;
 
@@ -9,7 +9,6 @@ use Symfony\Component\HttpKernel\Event\ExceptionEvent;
 
 class ExceptionHandler
 {
-
     public function onKernelException(ExceptionEvent $event)
     {
         $exception = $event->getThrowable();

@@ -22,7 +22,7 @@ class Company
     private string $name;
 
     #[Column(type: Types::STRING, length: 255)]
-    private ?string $symbol;
+    private string $symbol;
 
 
     public function getId(): ?int
@@ -41,12 +41,12 @@ class Company
         $this->name = $name;
     }
 
-    public function getSymbol(): ?string
+    public function getSymbol(): string
     {
         return $this->symbol;
     }
 
-    public function setSymbol(?string $symbol): void
+    public function setSymbol(string $symbol): void
     {
         $this->symbol = $symbol;
     }

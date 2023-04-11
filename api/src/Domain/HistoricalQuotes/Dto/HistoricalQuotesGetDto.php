@@ -10,10 +10,7 @@ use App\Common\Exception\ValidationException;
 use App\Common\Exception\ValueNotFoundDtoException;
 use App\Common\ValueObject\DateTimeRange;
 use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Component\Validator\Constraints as Assert;
 use Exception;
-use DateTime;
-use Symfony\Component\Validator\Validation;
 
 class HistoricalQuotesGetDto extends BaseDto
 {

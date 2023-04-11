@@ -10,7 +10,6 @@ use App\Common\Exception\ValidationException;
 use Exception;
 use Symfony\Component\HttpFoundation\RequestStack;
 use DateTime;
-use Symfony\Component\Validator\Validation;
 
 
 abstract class BaseDto
@@ -64,10 +63,6 @@ abstract class BaseDto
         return $this->data[$key];
     }
 
-    protected function getFloatValue($key): ?float
-    {
-        return array_key_exists($key, $this->data) ? floatval($this->data[$key]) : null;
-    }
 
     /**
      * @throws ValueNotFoundDtoException
@@ -80,16 +75,6 @@ abstract class BaseDto
     }
 
 
-    protected function getBoolValue($key, bool $default = false): bool
-    {
-        return array_key_exists($key, $this->data) ? boolval($this->data[$key]) : $default;
-    }
-
-    /** @throws Exception */
-    protected function getDateValue($key): ?DateTime
-    {
-        return array_key_exists($key, $this->data) && !empty($this->data[$key]) && !is_null($this->data[$key]) ? new DateTime($this->data[$key]) : null;
-    }
 
     /**
      * @throws Exception

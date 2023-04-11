@@ -6,10 +6,8 @@ namespace App\Common\Command;
 
 
 use App\Common\CollectionDto;
-use App\Common\EmailSender;
 use App\Domain\HistoricalQuotes\Dto\CompanySelectDto;
 use App\Domain\HistoricalQuotes\Factory\CompanyFactory;
-use App\Domain\HistoricalQuotes\HistoricalQuotesService;
 use App\Domain\HistoricalQuotes\Request\RequestTypes;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -38,13 +36,14 @@ class GetCompaniesCommand extends Command
     {
         $output->writeln('Start getting companies');
 
-
         $companyNameSymbolArray = $this->requestTypes->getCompaniesNameAndSymbolAPI();
+
+        $output->writeln('Start inserting companies');
 
         /** @var CompanySelectDto[] $companiesDto */
         $companiesDto = CollectionDto::getData($companyNameSymbolArray, CompanySelectDto::class);
 
-        $this->companyFactory->makeALot($companiesDto);
+        $this->companyFactory->makeBatch($companiesDto);
 
         $output->writeln('FINISH');
 

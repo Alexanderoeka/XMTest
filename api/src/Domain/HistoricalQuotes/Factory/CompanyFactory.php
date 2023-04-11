@@ -30,7 +30,7 @@ class CompanyFactory
     }
 
     /** @param CompanySelectDto[] */
-    public function makeALot(array $companiesDto)
+    public function makeBatch(array $companiesDto)
     {
         foreach ($companiesDto as $dto) {
             $this->make($dto);

@@ -17,13 +17,10 @@ function historicalQuotesApi(uri: any, params?: any) {
 
 export function getHistoricalQuotes(search: any) {
     let urlParams = new URLSearchParams(search).toString();
-    return historicalQuotesApi(`/api/historical-quotes/get/?${urlParams}`);
+    return historicalQuotesApi(`/api/historical-quotes/get?${urlParams}`);
 }
 
 
-export function getCompaniesNameAndSymbol() {
-    return historicalQuotesApi('/api/companies-name-symbol/get');
-}
 
 
 

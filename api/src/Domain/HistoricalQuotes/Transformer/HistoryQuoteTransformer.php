@@ -6,10 +6,12 @@ namespace App\Domain\HistoricalQuotes\Transformer;
 
 
 use App\Domain\HistoricalQuotes\Dto\HistoricalQuoteDto;
+use JetBrains\PhpStorm\ArrayShape;
 
 class HistoryQuoteTransformer
 {
-    public static function transform(HistoricalQuoteDto $dto)
+    #[ArrayShape(['date' => "string", 'open' => "float", 'high' => "float", 'low' => "float", 'close' => "float", 'volume' => "int|mixed"])]
+    public static function transform(HistoricalQuoteDto $dto): array
     {
         return [
             'date' => $dto->date->format('d-m-Y'),

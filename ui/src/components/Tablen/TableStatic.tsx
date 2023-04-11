@@ -13,7 +13,6 @@ export interface ColumnI {
     text: string,
 }
 export interface SearchTableI extends Omit<SearchI, 'search'> {
-    // tableData: any[],
     refreshLocal: boolean,
     rows: number
 }
@@ -48,76 +47,7 @@ export default function TableStatic(props: propsI) {
         refreshLocal: false
     })
 
-    // useEffect(() => {
-    //     getDataTable();
-    // }, [ state.refreshLocal])
-
-    // useEffect(() => {
-    //     handleChange('page', 1, false)
-    //     refreshAction();
-    // }, [searchButton])
-
-
-    // const getDataTable = () => {
-    //     const {perPage, page, orderBy, order} = state
-    //
-    //     let params = {
-    //         perPage,
-    //         page,
-    //         order,
-    //         orderBy
-    //     }
-    //     getTableData(params).then(response => {
-    //             pr(response);
-    //             setState(prev => ({
-    //                 ...prev,
-    //                 tableData: response.data,
-    //                 ...response.pagination
-    //
-    //             }))
-    //         }
-    //     );
-    //
-    // }
-
-
-    // const refreshAction = () => {
-    //     setState(prev => ({
-    //         ...prev,
-    //         refreshLocal: !prev.refreshLocal
-    //     }))
-    // }
-
-    // const handleChange = (field: string, value: any, isRefresh: boolean = true) => {
-    //     switch (field) {
-    //         case 'perPage':
-    //             let selection = (page - 1) * value;
-    //             if (state.rows < selection)
-    //                 handleChange('page', 1, false)
-    //             break;
-    //     }
-    //     setState(prev => ({
-    //         ...prev,
-    //         [field]: value
-    //     }));
-    //
-    //     if (isRefresh)
-    //         refreshAction();
-    // }
-
-
-    // const orderByColumn = (orderBy: string) => () => {
-    //
-    //     setState(prev => ({
-    //             ...prev,
-    //             orderBy: orderBy,
-    //             order: prev.order === 'asc' ? 'desc' : 'asc'
-    //         })
-    //     )
-    //     refreshAction();
-    // }
-
-    const {page, perPage, pages, orderBy, order} = state
+    const { orderBy, order} = state
 
     return (
         <div className={ts.box}>

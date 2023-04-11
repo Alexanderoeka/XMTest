@@ -17,6 +17,7 @@ class DateTimeRange
     /** @throws Exception */
     public function __construct(DateTime $start, DateTime $end)
     {
+
         if ($start > $end) {
             throw new DateTimeRangeException('Entered date of start greater then date end');
         }

@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
-import TablePage from "../pages/TablePage";
 import Links from "../components/Links";
 import HistoricalQuotesFormPage from "../pages/HistoricalQuotesFormPage";
 import Popup from "../components/Popup";
@@ -42,7 +41,6 @@ export default function Routing() {
             <Routes>
                 <Route path="/" element={<HistoricalQuotesFormPage popup={showPopup}/>}/>
                 <Route path="/historical-quotes-form" element={<HistoricalQuotesFormPage popup={showPopup}/>}/>
-                <Route path="/table" element={<TablePage/>}/>
             </Routes>
             {state.popup.show && <Popup click={hidePopup} value={state.popup.value} />}
         </Router>

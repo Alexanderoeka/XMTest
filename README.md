@@ -1,52 +1,62 @@
 # Project : "XM TEST"
 
-##ОСНОВНОЕ 
+## BASIC 
 
-Чтоб сбилдить весь проект:
+Build whole project:
 
     ./buildup.sh
 
-Подтянуть зависимости composer и npm соответственно:
+Get the composer and npm dependencies, respectively:
 
     ./composer.sh install
     ./npm.sh install
 
-Залить миграций и создание новой миграции:
+Create a new migration and fill in migrations :
 
-    ./migrate.sh
     ./make_migration.sh
+    ./migrate.sh
 
-Просто поднять или опустить проект:
+Up or down project:
     
     ./up.sh
     ./down.sh
 
-Проверить состояние контейнеров: 
+Check condition of containers: 
 
     ./ps_docker_compose.sh
 
-Выполнить какую либо команду в контейнере php :
+Execute some command inside container of php :
 
     ./console.sh
 
-Зайти внутрь контейнера по имени SERVICE:
+Go inside the container by name SERVICE:
 
     ./exec_docker.sh
 
+Clean cache of Symfony api:
+    
+    ./clear_cache.sh
+
+Set companies to DB from remote json for hints:
+
+    ./get_companies.sh
+
+Execute tests for project:
+
+    ./test.sh
+
+Profiler at: `http://localhost/_profiler/`
+
+Mailer at: `http://localhost:1080/`
 
 
-Профайлер по адресу: `http://localhost/_profiler/`
 
-Майлер по адресу: `http://localhost:1080/`
-
-
-
-## Возможные казусы 
+## Possible incidents
  
 ###1
-    Если уже запушены какие-либо сервисы типа NGINX или PostgreSQL на тех же портах,
-    то подъем контейнеров не произойдет.
+    If any NGINX or PostgreSQL services are already running on the same ports,
+        then the up of containers will not happen.
 
 ###2
-    Если в docker-compose или docker compose не находится имени SERVICE,
-    консольная команда не запуститься, тк запуск команды в контейнере происходит именно по нему.
+    If there is no SERVICE name in docker-compose or docker compose,
+        the console command will not start, because the command is launched in the container by it.

@@ -7,9 +7,7 @@ namespace App\Domain\HistoricalQuotes;
 use App\Common\BaseService;
 use App\Common\CollectionDto;
 use App\Common\EmailSender;
-use App\Common\Exception\ValueNotFoundDtoException;
 use App\Common\ValueObject\DateTimeRange;
-use App\Domain\HistoricalQuotes\Dto\CompanySelectDto;
 use App\Domain\HistoricalQuotes\Dto\HistoricalQuoteDto;
 use App\Domain\HistoricalQuotes\Dto\HistoricalQuotesGetDto;
 use App\Domain\HistoricalQuotes\Entity\Company;
@@ -63,7 +61,7 @@ class HistoricalQuotesService extends BaseService
 
 
         /** @var HistoricalQuoteDto[] $historicalQuotesDto */
-        $historicalQuotesDtoRanged = $this->sortHistoricalQuotes($historicalQuotesArray, $dto->dateTimeRange, 'date', );
+        $historicalQuotesDtoRanged = $this->sortHistoricalQuotes($historicalQuotesArray, $dto->dateTimeRange, 'date', SORT_ASC );
 
 
         $companyName = $this->companyRepository->findOneBy(['symbol' => $dto->companySymbol])?->getName() ?? 'undefinedName. i.e. API found quotes for this symbol, but BD or json site doesnt have it';
@@ -80,7 +78,7 @@ class HistoricalQuotesService extends BaseService
      * @param int $sort might be  SORT_DESC | SORT_ASC  etc.
      * @return HistoricalQuoteDto[]
      */
-    private function sortHistoricalQuotes(array $historicalQuotesArray, DateTimeRange $dateTimeRange, string $sortBy, int $sort = SORT_ASC): array
+    public function sortHistoricalQuotes(array $historicalQuotesArray, DateTimeRange $dateTimeRange, string $sortBy, int $sort = SORT_ASC): array
     {
         $historicalQuotesArraySorted = $this->sortArrayBy($historicalQuotesArray, $sortBy, $sort);
 

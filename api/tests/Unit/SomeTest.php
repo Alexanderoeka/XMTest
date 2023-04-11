@@ -37,10 +37,6 @@ class SomeTest extends KernelTestCase
         $company = $companyRepository->getOne();
 
 
-//        $this->expectOutputString(json_encode($company->getName()));
-
-
-
         $this->assertNull(null);
 
 

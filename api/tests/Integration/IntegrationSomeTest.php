@@ -17,8 +17,6 @@ class IntegrationSomeTest extends KernelTestCase
 
     private EntityManagerInterface $entityManager;
 
-    private HistoricalQuotesService $historicalQuotesService;
-
 
     protected function setUp(): void
     {
@@ -30,8 +28,6 @@ class IntegrationSomeTest extends KernelTestCase
 
             $this->entityManager = $kernel->getContainer()->get('doctrine')->getManager();
 
-
-            $this->historicalQuotesService = $this->getContainerVar(static::getContainer()->get(HistoricalQuotesService::class), HistoricalQuotesService::class);
 
         } catch (Exception $e) {
             return;
@@ -50,9 +46,6 @@ class IntegrationSomeTest extends KernelTestCase
         $companyId = $companyRepository->getOne()['id'];
 
         $company = $companyRepository->find($companyId);
-
-
-//        $this->expectOutputString(json_encode($company->getName()));
 
 
         $this->entityManager->remove($company);
